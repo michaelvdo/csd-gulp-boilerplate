@@ -1,8 +1,6 @@
 'use strict';
 
-//
 // requires
-//
 var gulp = require('gulp');
 var autoprefixer = require('gulp-autoprefixer');
 var browserSync = require('browser-sync').create();
@@ -12,7 +10,7 @@ var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 
 //
-// directories
+// directory variables
 //
 
 // project name
@@ -34,10 +32,10 @@ var sassFiles = 'app/styles/**/*.scss';
 var jsFiles = 'app/js/**/*.js';
 
 //
-// tasks
+// gulp tasks
 //
 
-// gulp static server task
+// gulp static server task (start server on port 8080)
 gulp.task('browser-sync', function() {
   browserSync.init({
     server: {
@@ -49,14 +47,14 @@ gulp.task('browser-sync', function() {
   });
 });
 
-// gulp html task
+// gulp html task (move html files to dist and refresh browser)
 gulp.task('html', function() {
   return gulp.src(htmlFiles)
   .pipe(gulp.dest(htmlDistFiles))
   .pipe(browserSync.stream());
 });
 
-// gulp sass task
+// gulp sass task (process sass files, add sourcemap and prefixes, refresh browser)
 gulp.task('sass', function() {
   return gulp.src(sassFiles)
   .pipe(sourcemaps.init())
@@ -71,16 +69,14 @@ gulp.task('sass', function() {
   .pipe(browserSync.stream());
 });
 
-// gulp js task
+// gulp js task (move js files to dist and refresh browser)
 gulp.task('js', function() {
   return gulp.src(jsFiles)
   .pipe(gulp.dest(jsDistFiles))
   .pipe(browserSync.stream());
 });
 
-//
-// gulp inject:libs task
-//
+// gulp inject:libs task (inject link/script elements in dist html files)
 gulp.task('inject:libs', function() {
   return gulp.src(htmlFiles)
   .pipe(inject(gulp.src([cssDistFiles + '*.css', jsDistFiles + '*.js'], {read: false}), {
@@ -92,7 +88,7 @@ gulp.task('inject:libs', function() {
   .pipe(gulp.dest(htmlDistFiles));
 });
 
-// gulp serve task
+// gulp serve task (setup server, watch for file changes)
 gulp.task('serve', ['sass', 'browser-sync'], function() {
   gulp.watch( htmlFiles, ['html', 'inject:libs']);
   gulp.watch( sassFiles, ['sass']);
@@ -102,5 +98,5 @@ gulp.task('serve', ['sass', 'browser-sync'], function() {
 // gulp default task
 gulp.task('default', ['serve']);
 
-// gulp init task
+// gulp init task (run once on project init for file/folder creation)
 gulp.task('init', ['html', 'sass', 'js']);
