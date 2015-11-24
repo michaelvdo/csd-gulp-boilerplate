@@ -1,0 +1,7 @@
+p {
+  color: teal;
+
+  @media all and (min-width: 48em) {
+    color: orange;
+  }
+}
