@@ -23,7 +23,7 @@ var baseDir = 'dist/'+ projectName + '/' + projectName + '.ui.apps/src/main/cont
 
 // dist directories
 var htmlDistFiles = baseDir + '/frontend/';
-var cssDistFiles = baseDir '/clientlibs_base/css/';
+var cssDistFiles = baseDir + '/clientlibs_base/css/';
 var jsDistFiles = baseDir + '/clientlibs_body/js/';
 var fontsDistFiles = baseDir + '/clientlibs_base/fonts/';
 var imgDistFiles = baseDir + '/clientlibs_base/img/';
@@ -85,7 +85,7 @@ gulp.task('inject:libs', function() {
   return gulp.src(htmlFiles)
   .pipe(inject(gulp.src([cssDistFiles + '*.css', jsDistFiles + '*.js'], {read: false}), {
     relative: false,
-    ignorePath: baseDir + projectName,
+    ignorePath: baseDir,
     addPrefix: '..',
     addRootSlash: false
   }))
