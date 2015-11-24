@@ -39,5 +39,6 @@ Thumbs.db
 # Project specific files and folders #
 ######################################
 .sass-cache/
+bower_components/
 node_modules/
 dist/

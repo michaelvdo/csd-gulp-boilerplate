@@ -1,13 +1,14 @@
 'use strict';
 
 // requires
-var gulp = require('gulp');
-var autoprefixer = require('gulp-autoprefixer');
-var browserSync = require('browser-sync').create();
-var inject = require('gulp-inject');
-var normalize = require('node-normalize-scss');
-var sass = require('gulp-sass');
-var sourcemaps = require('gulp-sourcemaps');
+var gulp            = require('gulp'),
+    autoprefixer    = require('gulp-autoprefixer'),
+    browserSync     = require('browser-sync').create(),
+    inject          = require('gulp-inject'),
+    mainBowerFiles  = require('main-bower-files')
+    normalize       = require('node-normalize-scss'),
+    sass            = require('gulp-sass'),
+    sourcemaps      = require('gulp-sourcemaps');
 
 //
 // directory variables
@@ -20,16 +21,16 @@ var projectName = 'project_gulp';
 var baseDir = 'dist/'+ projectName + '/' + projectName + '.ui.apps/src/main/content/jcr_root/etc/designs/' + projectName;
 
 // dist directories
-var htmlDistFiles = baseDir + '/frontend/';
-var cssDistFiles = baseDir + '/clientlibs_base/css/';
-var jsDistFiles = baseDir + '/clientlibs_body/js/';
-var fontsDistFiles = baseDir + '/clientlibs_base/fonts/';
-var imgDistFiles = baseDir + '/clientlibs_base/img/';
+var htmlDistFiles   = baseDir + '/frontend/',
+    cssDistFiles    = baseDir + '/clientlibs_base/css/',
+    jsDistFiles     = baseDir + '/clientlibs_body/js/',
+    fontsDistFiles  = baseDir + '/clientlibs_base/fonts/',
+    imgDistFiles    = baseDir + '/clientlibs_base/img/';
 
 // source directories
-var htmlFiles = 'app/html/*.html';
-var sassFiles = 'app/styles/**/*.scss';
-var jsFiles = 'app/js/**/*.js';
+var htmlFiles = 'app/html/*.html',
+    sassFiles = 'app/styles/**/*.scss',
+    jsFiles   = 'app/js/**/*.js';
 
 //
 // gulp tasks
@@ -79,13 +80,23 @@ gulp.task('js', function() {
 // gulp inject:libs task (inject link/script elements in dist html files)
 gulp.task('inject:libs', function() {
   return gulp.src(htmlFiles)
-  .pipe(inject(gulp.src([cssDistFiles + '*.css', jsDistFiles + '*.js'], {read: false}), {
-    relative: false,
-    ignorePath: baseDir,
-    addPrefix: '..',
-    addRootSlash: false
-  }))
-  .pipe(gulp.dest(htmlDistFiles));
+  .pipe(
+    inject(
+      gulp.src(
+        [cssDistFiles + '*.css', jsDistFiles + '*.js'],
+        {read: false}
+      ),
+      {
+      relative: false,
+      ignorePath: baseDir,
+      addPrefix: '..',
+      addRootSlash: false
+      }
+    )
+  )
+  .pipe(
+    gulp.dest(htmlDistFiles)
+  );
 });
 
 // gulp serve task (setup server, watch for file changes)

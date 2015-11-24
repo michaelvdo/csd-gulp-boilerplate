@@ -26,10 +26,10 @@ It is assumed you have node.js and npm installed globally, as well as gulp.
 * Clone this repo locally and remove .git/ and .gitignore.
 * Open gulpfile.js and change the variable 'projectName' into the name of your project.
 * Run `npm install` to install all devDependencies from package.json.
+* Run `bower install` to install all devDependencies from bower.json.
 * Run `gulp init` to run the gulp init task. This task builds up dist/ according to the dist directory variables in gulpfile.js.
 * To start building, run `gulp` to start a server on localhost:8080 and start watching for any changes within app/html/, app/js/ and app/styles/.
 
 ## To-do
 
-* Add bower & jQuery
 * Add `main-bower-files` to inject jQuery in html
