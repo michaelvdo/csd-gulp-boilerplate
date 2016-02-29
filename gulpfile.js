@@ -7,7 +7,7 @@
       autoprefixer    = require('gulp-autoprefixer'),
       browserSync     = require('browser-sync').create(),
       inject          = require('gulp-inject'),
-      mainBowerFiles  = require('main-bower-files')
+      mainBowerFiles  = require('main-bower-files'),
       normalize       = require('node-normalize-scss'),
       sass            = require('gulp-sass'),
       sourcemaps      = require('gulp-sourcemaps');
@@ -20,7 +20,9 @@
   var projectName = 'project_gulp';
 
   // serve folder
-  var baseDir = 'dist/'+ projectName + '/' + projectName + '.ui.apps/src/main/content/jcr_root/etc/designs/' + projectName;
+  // var baseDir = 'dist/'+ projectName + '/' + projectName + '.ui.apps/src/main/content/jcr_root/etc/designs/' + projectName;
+
+  var baseDir = 'dist';
 
   // dist directories
   var htmlDistFiles   = baseDir + '/frontend/',
@@ -53,8 +55,7 @@
   // gulp html task (move html files to dist and refresh browser)
   gulp.task('html', function() {
     return gulp.src(htmlFiles)
-    .pipe(gulp.dest(htmlDistFiles))
-    .pipe(browserSync.stream());
+    .pipe(gulp.dest(htmlDistFiles));
   });
 
   // gulp sass task (process sass files, add sourcemap and prefixes, refresh browser)
@@ -75,17 +76,18 @@
   // gulp js task (move js files to dist and refresh browser)
   gulp.task('js', function() {
     return gulp.src(jsFiles)
+    .pipe(concat('app.js'))
     .pipe(gulp.dest(jsDistFiles))
     .pipe(browserSync.stream());
   });
 
   // gulp inject:libs task (inject link/script elements in dist html files)
-  gulp.task('inject:libs', function() {
-    return gulp.src(htmlFiles)
+  gulp.task('inject:libs', ['html'], function() {
+    var stream = gulp.src(htmlFiles)
     .pipe(
       inject(
         gulp.src(
-          [cssDistFiles + '*.css', jsDistFiles + '*.js'],
+          [cssDistFiles + '*.css', jsDistFiles + '/**/*.js'],
           {read: false}
         ),
         {
@@ -96,9 +98,10 @@
         }
       )
     )
-    .pipe(
-      gulp.dest(htmlDistFiles)
-    );
+    .pipe(gulp.dest(htmlDistFiles))
+    .pipe(browserSync.stream());
+
+    return stream;
   });
 
   // gulp serve task (setup server, watch for file changes)
