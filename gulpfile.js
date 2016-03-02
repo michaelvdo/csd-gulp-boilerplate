@@ -6,8 +6,8 @@
   var gulp            = require('gulp'),
       autoprefixer    = require('gulp-autoprefixer'),
       browserSync     = require('browser-sync').create(),
-      inject          = require('gulp-inject'),
-      mainBowerFiles  = require('main-bower-files'),
+      concat          = require('gulp-concat'),
+      include         = require('gulp-include'),
       normalize       = require('node-normalize-scss'),
       sass            = require('gulp-sass'),
       sourcemaps      = require('gulp-sourcemaps');
@@ -32,7 +32,7 @@
       imgDistFiles    = baseDir + '/clientlibs_base/img/';
 
   // source directories
-  var htmlFiles = 'app/html/*.html',
+  var htmlFiles = 'app/html/**/*.html',
       sassFiles = 'app/styles/**/*.scss',
       jsFiles   = 'app/js/**/*.js';
 
@@ -54,7 +54,9 @@
 
   // gulp html task (move html files to dist and refresh browser)
   gulp.task('html', function() {
-    return gulp.src(htmlFiles)
+    gulp.src(htmlFiles)
+    .pipe(include())
+      .on('error', console.log)
     .pipe(gulp.dest(htmlDistFiles));
   });
 
@@ -81,32 +83,9 @@
     .pipe(browserSync.stream());
   });
 
-  // gulp inject:libs task (inject link/script elements in dist html files)
-  gulp.task('inject:libs', ['html'], function() {
-    var stream = gulp.src(htmlFiles)
-    .pipe(
-      inject(
-        gulp.src(
-          [cssDistFiles + '*.css', jsDistFiles + '/**/*.js'],
-          {read: false}
-        ),
-        {
-        relative: false,
-        ignorePath: baseDir,
-        addPrefix: '..',
-        addRootSlash: false
-        }
-      )
-    )
-    .pipe(gulp.dest(htmlDistFiles))
-    .pipe(browserSync.stream());
-
-    return stream;
-  });
-
   // gulp serve task (setup server, watch for file changes)
   gulp.task('serve', ['sass', 'browser-sync'], function() {
-    gulp.watch( htmlFiles, ['html', 'inject:libs']);
+    gulp.watch( htmlFiles, ['html']);
     gulp.watch( sassFiles, ['sass']);
     gulp.watch( jsFiles, ['js']);
   });
