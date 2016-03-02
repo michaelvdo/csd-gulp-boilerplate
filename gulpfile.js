@@ -32,7 +32,8 @@
       imgDistFiles    = baseDir + '/clientlibs_base/img/';
 
   // source directories
-  var htmlFiles = 'app/html/**/*.html',
+  var allHtmlFiles = 'app/html/**/*.html',
+      htmlMainFiles = 'app/html/*.html',
       sassFiles = 'app/styles/**/*.scss',
       jsFiles   = 'app/js/**/*.js';
 
@@ -54,10 +55,11 @@
 
   // gulp html task (move html files to dist and refresh browser)
   gulp.task('html', function() {
-    gulp.src(htmlFiles)
+    gulp.src(htmlMainFiles)
     .pipe(include())
       .on('error', console.log)
-    .pipe(gulp.dest(htmlDistFiles));
+    .pipe(gulp.dest(htmlDistFiles))
+    .pipe(browserSync.stream());
   });
 
   // gulp sass task (process sass files, add sourcemap and prefixes, refresh browser)
@@ -85,7 +87,7 @@
 
   // gulp serve task (setup server, watch for file changes)
   gulp.task('serve', ['sass', 'browser-sync'], function() {
-    gulp.watch( htmlFiles, ['html']);
+    gulp.watch( allHtmlFiles, ['html']);
     gulp.watch( sassFiles, ['sass']);
     gulp.watch( jsFiles, ['js']);
   });
