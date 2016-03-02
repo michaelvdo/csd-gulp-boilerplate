@@ -33,7 +33,7 @@
 
   // source directories
   var allHtmlFiles = 'app/html/**/*.html',
-      htmlMainFiles = 'app/html/*.html',
+      mainHtmlFiles = 'app/html/*.html',
       sassFiles = 'app/styles/**/*.scss',
       jsFiles   = 'app/js/**/*.js';
 
@@ -55,7 +55,7 @@
 
   // gulp html task (move html files to dist and refresh browser)
   gulp.task('html', function() {
-    gulp.src(htmlMainFiles)
+    gulp.src(mainHtmlFiles)
     .pipe(include())
       .on('error', console.log)
     .pipe(gulp.dest(htmlDistFiles))
