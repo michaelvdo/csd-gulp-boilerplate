@@ -32,5 +32,5 @@ It is assumed you have node.js and npm installed globally, as well as gulp.
 
 ## To-do
 
-* Investigate http://www.npmjs.com/package/gulp-environments
-* Investigate http://www.npmjs.com/package/ghooks
+* Investigate gulp-filter for separatin headscripts & bodyscripts (and possile other uses)
+* Investigate [gulp-bust](http://www.npmjs.com/package/gulp-bust) for cache busting to improve performance ()
