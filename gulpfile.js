@@ -22,7 +22,7 @@
   var baseDir = 'dist';
 
   // dist directories
-  var htmlDistFiles   = baseDir,
+  var htmlDistFiles   = baseDir + '/frontend/',
       cssDistFiles    = baseDir,
       jsDistFiles     = baseDir,
       fontsDistFiles  = baseDir + '/assets/fonts/',
