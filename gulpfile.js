@@ -19,17 +19,14 @@
   // project name
   var projectName = 'project_gulp';
 
-  // serve folder
-  // var baseDir = 'dist/'+ projectName + '/' + projectName + '.ui.apps/src/main/content/jcr_root/etc/designs/' + projectName;
-
   var baseDir = 'dist';
 
   // dist directories
-  var htmlDistFiles   = baseDir + '/frontend/',
-      cssDistFiles    = baseDir + '/clientlibs_base/css/',
-      jsDistFiles     = baseDir + '/clientlibs_body/js/',
-      fontsDistFiles  = baseDir + '/clientlibs_base/fonts/',
-      imgDistFiles    = baseDir + '/clientlibs_base/img/';
+  var htmlDistFiles   = baseDir,
+      cssDistFiles    = baseDir,
+      jsDistFiles     = baseDir,
+      fontsDistFiles  = baseDir + '/assets/fonts/',
+      imgDistFiles    = baseDir + '/assets/img/';
 
   // source directories
   var allHtmlFiles = 'app/html/**/*.html',
