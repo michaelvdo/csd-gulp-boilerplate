@@ -25,14 +25,14 @@
   var htmlDistFiles   = baseDir + '/frontend/',
       cssDistFiles    = baseDir,
       jsDistFiles     = baseDir,
-      fontsDistFiles  = baseDir + '/assets/fonts/',
-      imgDistFiles    = baseDir + '/assets/img/';
+      assetDistFiles  = baseDir + '/assets/';
 
   // source directories
   var allHtmlFiles = 'app/html/**/*.html',
       mainHtmlFiles = 'app/html/*.html',
       sassFiles = 'app/styles/**/*.scss',
-      jsFiles   = 'app/js/**/*.js';
+      jsFiles   = 'app/js/**/*.js',
+      assetFiles   = 'app/assets/**/*.*';
 
   //
   // gulp tasks
@@ -82,17 +82,25 @@
     .pipe(browserSync.stream());
   });
 
+  // gulp assets task (move asset files to dist and refresh browser)
+  gulp.task('assets', function() {
+    return gulp.src(assetFiles)
+    .pipe(gulp.dest(assetDistFiles))
+    .pipe(browserSync.stream());
+  });
+
   // gulp serve task (setup server, watch for file changes)
   gulp.task('serve', ['sass', 'browser-sync'], function() {
     gulp.watch( allHtmlFiles, ['html']);
     gulp.watch( sassFiles, ['sass']);
     gulp.watch( jsFiles, ['js']);
+    gulp.watch( assetFiles, ['assets']);
   });
 
   // gulp default task
   gulp.task('default', ['serve']);
 
   // gulp init task (run once on project init for file/folder creation)
-  gulp.task('init', ['html', 'sass', 'js']);
+  gulp.task('init', ['html', 'sass', 'js', 'assets']);
 
 })();
